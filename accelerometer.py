@@ -66,6 +66,7 @@ class Accelerometer:
             time.sleep(1)
 
             self.freq = float(open(pathToFrequency, 'r').readline())
+            self.dt = 1/self.freq
 
         else:
             assert("There is no that sampling frequency. Try one of the following frequencies: 15.62, 62.5, 125, 250, 500, 1000, 2000")
@@ -160,15 +161,21 @@ class Accelerometer:
 
         return self.az
 
-    def getVx(self, v0=0):
+    def getVx(self):
+        self.vx += self.dt*self.ax
+        return self.vx
 
-        pass
+    def getVy(self):
+        self.vy += self.dt*self.ay
+        return self.vy
 
-    def getVy(self, v0=0):
-        pass
-
-    def getVz(self, v0=0):
-        pass
+    def getVz(self):
+        self.vz += self.dt*self.az
+        return self.vz
+    
+    def getSpeed(self):
+        self.speed = (self.vx**2 + self.vy**2 + self.vz**2)**(1/2)
+        return self.speed
 
     def printAccel(self):
         accelX = self.getAx()
