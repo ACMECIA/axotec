@@ -162,19 +162,19 @@ class Accelerometer:
         return self.az
 
     def getVx(self):
-        self.vx += self.dt*self.ax
+        self.vx += self.dt*self.getAx()
         return self.vx
 
     def getVy(self):
-        self.vy += self.dt*self.ay
+        self.vy += self.dt*self.getAy()
         return self.vy
 
     def getVz(self):
-        self.vz += self.dt*self.az
+        self.vz += self.dt*self.getAz()
         return self.vz
     
     def getSpeed(self):
-        self.speed = (self.vx**2 + self.vy**2 + self.vz**2)**(1/2)
+        self.speed = (self.getVx()**2 + self.getVy()**2 + self.getVz()**2)**(1/2)
         return self.speed
 
     def printAccel(self):
