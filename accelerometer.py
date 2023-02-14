@@ -174,7 +174,7 @@ class Accelerometer:
 
         while angle < -math.pi:
             angle += 2.0 * math.pi
-            
+
         return angle
 
     def getAngles(self):
@@ -183,7 +183,6 @@ class Accelerometer:
         az = self.getAz()
 
         thx = math.atan2(ax,math.sqrt(ay**2 + az**2))
-        print(thx)
         thx = self.normalize_angle(thx)
         
 
