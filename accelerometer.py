@@ -1,6 +1,6 @@
 import os
 import time
-import numpy as np
+import math
 
 path = "/sys/bus/iio/devices/iio:device0/"
 
@@ -169,11 +169,11 @@ class Accelerometer:
         :param angle: (float)
         :return: (float) Angle in radian in [-pi, pi]
         """
-        while angle > np.pi:
-            angle -= 2.0 * np.pi
+        while angle > math.pi:
+            angle -= 2.0 * math.pi
 
-        while angle < -np.pi:
-            angle += 2.0 * np.pi
+        while angle < -math.pi:
+            angle += 2.0 * math.pi
 
 
     def getAngles(self):
@@ -181,10 +181,10 @@ class Accelerometer:
         ay = self.getAy()
         az = self.getAz()
 
-        thx = np.arctan2(ax,np.sqrt(ay**2 + az**2))
+        thx = math.atan2(ax,math.sqrt(ay**2 + az**2))
         thx = self.normalize_angle(thx)
 
-        thy = np.arctan2(ay,np.sqrt(ax**2 + az**2))
+        thy = math.atan2(ay,math.sqrt(ax**2 + az**2))
         thy = self.normalize_angle(thy)
 
         return thx, thy
