@@ -127,7 +127,7 @@ class Accelerometer:
         self.scale = float(fileScale.readline())
         
         # Getting acceleration in X
-        self.ax = rawAx*self.scale - self.axOff
+        self.ax = rawAx*self.scale #- self.axOff
 
         return self.ax
     
@@ -142,7 +142,7 @@ class Accelerometer:
         self.scale = float(fileScale.readline())
         
         # Getting acceleration in Y
-        self.ay = rawAy*self.scale - self.ayOff
+        self.ay = rawAy*self.scale #- self.ayOff
 
         return self.ay
     
@@ -157,7 +157,7 @@ class Accelerometer:
         self.scale = float(fileScale.readline())
         
         # Getting acceleration in Y
-        self.az = rawAz*self.scale - self.azOff #+ g
+        self.az = rawAz*self.scale #- self.azOff #+ g
 
         return self.az
 
