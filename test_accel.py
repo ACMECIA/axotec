@@ -7,6 +7,6 @@ def main():
     accel.calibrate()
 
     while True:
-        accel.printAccel()
+        print(accel.freq)
 
 main()
