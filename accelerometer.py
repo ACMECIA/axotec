@@ -103,6 +103,13 @@ class Accelerometer:
 
         print(f"Offset values: ax={self.axOff}, ay={self.axOff}, az={self.azOff}")
 
+    def calibrate(self):
+        print("Calibrando acelerómetro...")
+        self.setPrecision()
+        self.setSamplingFreq()
+        self.getOffset()
+        print("Acelerómetro calibrado")
+
     def getAx(self):
 
         # Reading Files
@@ -148,21 +155,12 @@ class Accelerometer:
 
         return self.az
 
+    def getVx(self):
+        pass
     def printAccel(self):
-
-        # Acceleration
-        fileAccelX = open(pathToAccelX, 'r')
-        fileAccelY = open(pathToAccelY, 'r')
-        fileAccelZ = open(pathToAccelZ, 'r')
-        fileScaleAccel = open(pathToScaleAccel, 'r')
-
-        rawAccelX =  int(fileAccelX.readline())
-        rawAccelY =  int(fileAccelY.readline())
-        rawAccelZ =  int(fileAccelZ.readline())
-        rawAccelScale =  float(fileScaleAccel.readline())
-        accelX = rawAccelX*rawAccelScale - self.axOff
-        accelY = rawAccelY*rawAccelScale - self.ayOff
-        accelZ = rawAccelZ*rawAccelScale + g - self.azOff
+        accelX = self.getAx()
+        accelY = self.getAy()
+        accelZ = self.getAz()
 
         print(accelX, accelY, accelZ)
 
