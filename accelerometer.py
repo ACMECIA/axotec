@@ -13,7 +13,7 @@ pathToScaleAccel = path + "in_accel_scale"
 pathToFrequency = path + "in_accel_sampling_frequency"
 pathToAvailableFreq = path + "sampling_frequency_available"
 
-# Constant
+# Constants
 g = 9.81 # m/s**2
 
 class Accelerometer:
