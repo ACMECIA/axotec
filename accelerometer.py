@@ -182,8 +182,9 @@ class Accelerometer:
         az = self.getAz()
 
         thx = math.atan2(ax,math.sqrt(ay**2 + az**2))
-        thx = self.normalize_angle(thx)
         print(thx)
+        thx = self.normalize_angle(thx)
+        
 
         thy = math.atan2(ay,math.sqrt(ax**2 + az**2))
         thy = self.normalize_angle(thy)
