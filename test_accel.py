@@ -7,7 +7,8 @@ def main():
     accel.calibrate()
     accel.getSamplingFreq()
     while True:
-        accel.printAccel()
+        #accel.printAccel()
         #print(accel.getSpeed())
+        print(accel.getAngles())
 
 main()
