@@ -22,6 +22,11 @@ class Accelerometer:
         self.ax = 0
         self.ay = 0
         self.az = 0
+
+        self.vx = 0
+        self.vy = 0
+        self.vz = 0
+
         self.axOff = 0.30476047799999745
         self.ayOff = 0.30476047799999745
         self.azOff = 0.12532269
@@ -101,7 +106,7 @@ class Accelerometer:
         self.ayOff /= n_iter
         self.azOff /= n_iter
 
-        print(f"Offset values: ax={self.axOff}, ay={self.axOff}, az={self.azOff}")
+        print(f"Valores de los offset: ax={self.axOff}, ay={self.axOff}, az={self.azOff}")
 
     def calibrate(self):
         print("Calibrando acelerómetro...")
@@ -155,8 +160,16 @@ class Accelerometer:
 
         return self.az
 
-    def getVx(self):
+    def getVx(self, v0=0):
+
         pass
+
+    def getVy(self, v0=0):
+        pass
+
+    def getVz(self, v0=0):
+        pass
+
     def printAccel(self):
         accelX = self.getAx()
         accelY = self.getAy()
