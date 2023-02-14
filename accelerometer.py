@@ -127,7 +127,7 @@ class Accelerometer:
         self.scale = float(fileScale.readline())
         
         # Getting acceleration in X
-        self.ax = rawAx*self.scale #- self.axOff
+        self.ax = rawAx*self.scale - self.axOff
 
         return self.ax
     
@@ -142,7 +142,7 @@ class Accelerometer:
         self.scale = float(fileScale.readline())
         
         # Getting acceleration in Y
-        self.ay = rawAy*self.scale #- self.ayOff
+        self.ay = rawAy*self.scale - self.ayOff
 
         return self.ay
     
@@ -157,22 +157,25 @@ class Accelerometer:
         self.scale = float(fileScale.readline())
         
         # Getting acceleration in Y
-        self.az = rawAz*self.scale #- self.azOff #+ g
+        self.az = rawAz*self.scale - self.azOff #+ g
 
         return self.az
 
     def getVx(self):
         ax = round(self.getAx(),3)
+        ax = self.getAx()
         self.vx += self.dt*ax
         return self.vx
 
     def getVy(self):
         ay = round(self.getAy(),3)
+        ay = self.getAy()
         self.vy += self.dt*ay
         return self.vy
 
     def getVz(self):
         az = round(self.getAz(),3)
+        az = self.getAz()
         self.vz += self.dt*az
         return self.vz
     
