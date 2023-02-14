@@ -75,7 +75,7 @@ class Accelerometer:
     def getSamplingFreq(self):
 
         self.freq = float(open(pathToFrequency, 'r').readline())
-
+        self.dt = 1/self.freq
         return self.freq
 
     def getOffset(self, n_iter = 5000):
