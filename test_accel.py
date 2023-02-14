@@ -9,6 +9,7 @@ def main():
     while True:
         #accel.printAccel()
         #print(accel.getSpeed())
-        print(accel.getAngles())
+        thx,thy =accel.getAngles()
+        print(thx, thy)
 
 main()
