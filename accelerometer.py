@@ -174,7 +174,8 @@ class Accelerometer:
 
         while angle < -math.pi:
             angle += 2.0 * math.pi
-
+            
+        return angle
 
     def getAngles(self):
         ax = self.getAx()

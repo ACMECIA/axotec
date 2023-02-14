@@ -1,5 +1,5 @@
 from accelerometer import Accelerometer
-
+import math
 def main():
     accel = Accelerometer()
     
@@ -10,6 +10,6 @@ def main():
         #accel.printAccel()
         #print(accel.getSpeed())
         thx,thy =accel.getAngles()
-        #print(thx, thy)
+        print(thx*180/math.pi, thy*180/math.pi)
 
 main()
