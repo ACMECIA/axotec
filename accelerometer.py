@@ -28,9 +28,9 @@ class Accelerometer:
         self.vy = 0
         self.vz = 0
 
-        self.axOff = 0.30476047799999745
-        self.ayOff = 0.30476047799999745
-        self.azOff = 0.12532269
+        self.axOff = 0.19832264209559977
+        self.ayOff = 0.19832264209559977
+        self.azOff = 0.27480340153799954
 
         self.freq= self.getSamplingFreq()
         self.scale = 0
@@ -101,7 +101,7 @@ class Accelerometer:
             # Scaling values
             self.axOff += rawAx*self.scale
             self.ayOff += rawAy*self.scale
-            self.azOff += rawAz*self.scale + g
+            self.azOff += rawAz*self.scale  + g
             
             cntOff += 1
         # Getting offsets
