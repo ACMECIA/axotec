@@ -5,7 +5,7 @@ def main():
     
     # Calibration (Al calibrar, la frecuencia se actualiza)
     #accel.calibrate()
-    accel.getSamplingFreq()
+    #accel.getSamplingFreq()
     while True:
         accel.printAccel()
         #print(accel.getSpeed())

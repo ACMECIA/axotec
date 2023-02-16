@@ -28,10 +28,14 @@ class Accelerometer:
         self.vy = 0
         self.vz = 0
 
-        self.axOff = 0.30476047799999745
-        self.ayOff = 0.30476047799999745
-        self.azOff = 0.12532269
-        self.freq= 0
+        #self.axOff = 0.30476047799999745
+        #self.ayOff = 0.30476047799999745
+        #self.azOff = 0.12532269
+        self.axOff = 0
+        self.ayOff = 0
+        self.azOff = 0
+
+        self.freq= self.getSamplingFreq()
         self.scale = 0
 
     def setPrecision(self, range = 4):
@@ -219,5 +223,6 @@ class Accelerometer:
         accelY = self.getAy()
         accelZ = self.getAz()
 
-        print(accelX, accelY, accelZ)
+        magnitud = math.sqrt(accelX**2 + accelY**2 + accelZ**2)
+        print(accelX, accelY, accelZ, magnitud)
 
