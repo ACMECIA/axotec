@@ -4,7 +4,7 @@ def main():
     accel = Accelerometer()
     
     # Calibration (Al calibrar, la frecuencia se actualiza)
-    accel.calibrate()
+    #accel.calibrate()
     accel.getSamplingFreq()
     while True:
         accel.printAccel()
