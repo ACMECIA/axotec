@@ -10,6 +10,6 @@ def main():
         #accel.printAccel()
         #print(accel.getSpeed())
         thx,thy =accel.getAngles()
-        print(thx*180/math.pi, thy*180/math.pi)
+        print("roll: ",thx*180/math.pi,"pitch: ", thy*180/math.pi)
 
 main()
