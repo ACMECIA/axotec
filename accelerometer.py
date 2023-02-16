@@ -101,7 +101,7 @@ class Accelerometer:
             # Scaling values
             self.axOff += rawAx*self.scale
             self.ayOff += rawAy*self.scale
-            self.azOff += rawAz*self.scale #+ g
+            self.azOff += rawAz*self.scale + g
             
             cntOff += 1
         # Getting offsets
