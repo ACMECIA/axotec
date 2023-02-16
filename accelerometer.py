@@ -28,12 +28,9 @@ class Accelerometer:
         self.vy = 0
         self.vz = 0
 
-        #self.axOff = 0.30476047799999745
-        #self.ayOff = 0.30476047799999745
-        #self.azOff = 0.12532269
-        self.axOff = 0
-        self.ayOff = 0
-        self.azOff = 0
+        self.axOff = 0.30476047799999745
+        self.ayOff = 0.30476047799999745
+        self.azOff = 0.12532269
 
         self.freq= self.getSamplingFreq()
         self.scale = 0
