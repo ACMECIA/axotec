@@ -7,9 +7,9 @@ def main():
     #accel.calibrate()
     #accel.getSamplingFreq()
     while True:
-        #accel.printAccel()
+        accel.printAccel()
         #print(accel.getSpeed())
-        thx,thy =accel.getAngles()
-        print(thx*180/math.pi, thy*180/math.pi)
+        #thx,thy =accel.getAngles()
+        #print(thx*180/math.pi, thy*180/math.pi)
 
 main()
