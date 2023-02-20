@@ -5,12 +5,13 @@ network = canopen.Network()
 
 network.connect(channel='can0', bustype='socketcan', bitrate=125000)
 
-node = network.add_node(10, 'JN2100_V2.5.4.eds')     # El JN2100
+node = network.add_node(6, 'JN2100_V2.5.4.eds')     # El JN2100
 
 for node_id in network:
     print(node_id)
     print(network[node_id])
 
+# Watch the index and subindex
 for obj in node.object_dictionary.values():
     print('0x%X: %s' % (obj.index, obj.name))
     if isinstance(obj, canopen.objectdictionary.Record):
