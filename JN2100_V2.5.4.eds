@@ -1199,7 +1199,7 @@ ParameterName=NMTStartup
 ObjectType=0x7
 DataType=0x0007
 AccessType=rw
-DefaultValue=0
+DefaultValue=8
 PDOMapping=0
 
 [6000]
