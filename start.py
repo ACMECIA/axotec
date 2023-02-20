@@ -11,6 +11,13 @@ for node_id in network:
     print(node_id)
     print(network[node_id])
 
+for obj in node.object_dictionary.values():
+    print('0x%X: %s' % (obj.index, obj.name))
+    if isinstance(obj, canopen.objectdictionary.Record):
+        for subobj in obj.values():
+            print('  %d: %s' % (subobj.subindex, subobj.name))
+
+
 # This will attempt to read an SDO from nodes 1 - 127
 # network.scanner.search()
 # # We may need to wait a short while here to allow all nodes to respond
