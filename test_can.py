@@ -1,7 +1,7 @@
 import can
 
 # Crear una instancia de la clase Bus para la interfaz CAN
-bus = can.interface.Bus(channel='can0', bustype='socketcan_native')
+bus = can.interface.Bus(channel='can0', bustype='socketcan')
 
 # Crear un mensaje RTR para solicitar datos del nodo con ID de arbitraje 0x10
 rtr_msg = can.Message(arbitration_id=0x10, is_remote_frame=True, dlc=8)
