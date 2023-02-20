@@ -19,7 +19,7 @@ for obj in node.object_dictionary.values():
             print('  %d: %s' % (subobj.subindex, subobj.name))
 
 
-print(node.object_dictionary[0x2000])
+print(node.object_dictionary[0x6010])
 
 # This will attempt to read an SDO from nodes 1 - 127
 # network.scanner.search()
