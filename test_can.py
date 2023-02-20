@@ -1,20 +1,16 @@
+import can
 
-from libcan import CAN
-import os, time
+# Crear una instancia de la clase Bus para la interfaz CAN
+bus = can.interface.Bus(channel='can0', bustype='socketcan_native')
 
+# Crear un mensaje RTR para solicitar datos del nodo con ID de arbitraje 0x10
+rtr_msg = can.Message(arbitration_id=0x10, is_remote_frame=True, dlc=8)
 
-# CAN configuration
+# Enviar el mensaje RTR
+bus.send(rtr_msg)
 
-can_frame_fmt = "=IB3x8s"
+# Esperar y recibir la respuesta del nodo
+response_msg = bus.recv()
 
-can_port = "can0"
-
-can = CAN(can_frame_fmt, can_port)
-
-
-
-while True:
-
-    can_vel = can.get_vel(10)
-
-    print(can_vel)
+# Mostrar el mensaje de respuesta
+print(response_msg)
