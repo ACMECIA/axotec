@@ -1,11 +1,11 @@
 import can
 
-# Configurar la interfaz CAN
-can_interface = 'can0'  # Nombre de la interfaz CAN
+# Configura la interfaz CAN
+can_interface = 'can0'
 bus = can.interface.Bus(can_interface, bustype='socketcan_native')
 
-# Leer datos del bus CAN
+# Lee los mensajes del bus CAN
 while True:
-    message = bus.recv()  # Esperar a que llegue un mensaje
+    message = bus.recv()
     if message is not None:
-        print(message)
+        print(f"ID: {message.arbitration_id}  Data: {message.data}")
