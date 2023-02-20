@@ -53,10 +53,10 @@ Line3=
 Line4=Interface: CANOpen
 Line5=
 Line6=JN2100
-Line7=Angular Range: 0-360 / +- 180
+Line7=Angular Range: 0-360� / +- 180�
 Line8=Axes: 2
-Line9=Resolution: 0.001
-Line10=Accuracy: 0.5
+Line9=Resolution: 0.001�
+Line10=Accuracy: 0.5�
 Line11=Connection: 2 x M12 5pin
 Line12=Operation voltage: 9.2 - 30 V DC
 
