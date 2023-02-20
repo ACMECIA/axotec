@@ -5,7 +5,7 @@ can_interface = 'can0'
 can_bus = can.interface.Bus(can_interface, bustype='socketcan')
 
 # Define el ID del mensaje y la longitud de los datos
-message_id = 0x10
+message_id = 0xA
 message_length = 4
 
 # Define la función para convertir los valores de los sensores en grados
