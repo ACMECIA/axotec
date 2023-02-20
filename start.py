@@ -1,14 +1,13 @@
-import can
+import canopen
 
-# Configura el bus CAN
-can_interface = 'can0'
-bus = can.interface.Bus(can_interface, bustype='socketcan')
+# Conectar al dispositivo CANopen
+network = canopen.Network()
+network.connect(bustype='socketcan', channel='can0', bitrate=125000)
+node_id = 10
+node = network.add_node(node_id, 'EDS_FILE.eds')
 
-# Define el mensaje CAN
-msg = can.Message(arbitration_id=0xA, data=[0x1F, 0x80, 0x1F, 0x08, 0x01, 0x00, 0x00, 0x00], extended_id=False)
+# Escribir el valor 1 en el sub-índice 0x08 del índice 0x1F80
+node.sdo[0x1F80][0x08].raw = 1
 
-# Envía el mensaje CAN
-bus.send(msg)
-
-# Cierra el bus CAN
-bus.shutdown()
+# Desconectar del dispositivo CANopen
+network.disconnect()
