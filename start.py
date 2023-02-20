@@ -5,7 +5,7 @@ network = canopen.Network()
 
 network.connect(channel='can0', bustype='socketcan', bitrate=125000)
 
-node = network.add_node(6, 'JN2100_V2.5.4.eds')     # El JN2100
+node = network.add_node(1, 'JN2100_V2.5.4.eds')     # El JN2100
 
 for node_id in network:
     print(node_id)
@@ -18,6 +18,8 @@ for obj in node.object_dictionary.values():
         for subobj in obj.values():
             print('  %d: %s' % (subobj.subindex, subobj.name))
 
+
+print(node.object_dictionary[0x6020])
 
 # This will attempt to read an SDO from nodes 1 - 127
 # network.scanner.search()
