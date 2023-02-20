@@ -1,12 +1,20 @@
-import can
 
-# Configura la interfaz CAN
-can_interface = 'can0'
-bus = can.interface.Bus(channel="can0", bustype='socketcan')
+from libcan import CAN
+import os, time
 
-# Lee los mensajes del bus CAN
+
+# CAN configuration
+
+can_frame_fmt = "=IB3x8s"
+
+can_port = "can0"
+
+can = CAN(can_frame_fmt, can_port)
+
+
+
 while True:
-    message = bus.recv()
-    print("None")
-    if message is not None:
-        print(f"ID: {message.arbitration_id}  Data: {message.data}")
+
+    can_vel = can.get_vel(10)
+
+    print(can_vel)
