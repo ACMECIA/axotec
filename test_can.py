@@ -1,16 +1,26 @@
 import can
+import struct
 
-# Crear una instancia de la clase Bus para la interfaz CAN
-bus = can.interface.Bus(channel='can0', bustype='socketcan')
+can_interface = 'can0'
+can_bus = can.interface.Bus(can_interface, bustype='socketcan')
 
-# Crear un mensaje RTR para solicitar datos del nodo con ID de arbitraje 0x10
-rtr_msg = can.Message(arbitration_id=0x10, is_remote_frame=True, dlc=8)
+# Define el ID del mensaje y la longitud de los datos
+message_id = 0x10
+message_length = 4
 
-# Enviar el mensaje RTR
-bus.send(rtr_msg)
+# Define la función para convertir los valores de los sensores en grados
+def sensor_value_to_degrees(sensor_value):
+    return sensor_value * 0.01
 
-# Esperar y recibir la respuesta del nodo
-response_msg = bus.recv()
+# Define la función para leer y procesar los datos del bus CAN
+def read_can_data():
+    while True:
+        message = can_bus.recv()
+        if message.arbitration_id == message_id and message.dlc == message_length:
+            longitudinal, lateral = struct.unpack('<hh', message.data)
+            longitudinal_degrees = sensor_value_to_degrees(longitudinal)
+            lateral_degrees = sensor_value_to_degrees(lateral)
+            print(f'Longitudinal: {longitudinal_degrees}°, Lateral: {lateral_degrees}°')
 
-# Mostrar el mensaje de respuesta
-print(response_msg)
+# Inicia la lectura de datos del bus CAN
+read_can_data()
