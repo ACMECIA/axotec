@@ -2,7 +2,7 @@ import can
 
 # Configura la interfaz CAN
 can_interface = 'can0'
-bus = can.interface.Bus(can_interface, bustype='socketcan')
+bus = can.interface.Bus(channel="can0", bustype='socketcan')
 
 # Lee los mensajes del bus CAN
 while True:
