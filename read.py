@@ -70,7 +70,7 @@ subindex = 1
 
 # X Y SLOPE
 while True:
-    x_slope = node.sdo[0x2000].raw
+    x_slope = node.sdo[0x2000].phys
     x_unit = node.sdo[0x2010].raw
     y_slope = node.sdo[0x2200].raw
     y_unit = node.sdo[0x2210].raw
