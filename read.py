@@ -21,10 +21,11 @@ subindex = 1
 # quaternion: 0x2301
 
 while True:
-    quaternion = node.sdo[0x2301]
+    x_grav = node.sdo[0x2300][0x01]
+    y_grav = node.sdo[0x2300][0x02]
+    z_grav = node.sdo[0x2300][0x03]
 
-    for value in quaternion.values():
-        print(value.raw)
+    print(x_grav,y_grav,z_grav)
 
 
 # Cerrar conexión CAN
