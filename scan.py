@@ -2,7 +2,7 @@ import canopen
 import time
 
 network = canopen.Network()
-network.connect(channel='can0', bustype='socketcan', bitrate=125000)
+network.connect(channel='can1', bustype='socketcan', bitrate=125000)
 # This will attempt to read an SDO from nodes 1 - 127
 network.scanner.search()
 # We may need to wait a short while here to allow all nodes to respond
