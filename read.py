@@ -17,7 +17,9 @@ index = 0x1000
 subindex = 1
 
 
-device_type = node.sdo[0x1000]
+# device type: 0x1000
+# quaternion: 0x2301
+device_type = node.sdo[0x2301]
 print("The device type is 0x%X" % device_type.raw)
 
 
