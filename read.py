@@ -74,7 +74,7 @@ while True:
 
     y_slope = node.sdo[0x2200].raw/(2**15)*180
 
-    print(math.round(x_slope,2), math.round(y_slope,2))
+    print(round(x_slope,2), round(y_slope,2))
 
 
 
