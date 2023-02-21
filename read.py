@@ -59,12 +59,20 @@ subindex = 1
 
 #     print(pitch,roll,yaw)
 
-
-# x y slope
+## GRAVITY
 while True:
-    x_slope = node.sdo[0x2000].raw
-    y_slope = node.sdo[0x2200].raw
+    x_grav = node.sdo[0x2300][0x01].raw
+    y_grav = node.sdo[0x2300][0x02].raw
+    z_grav = node.sdo[0x2300][0x03].raw
 
-    print(x_slope,y_slope)
+    print(x_grav,y_grav,z_grav)
+
+
+# # X Y SLOPE
+# while True:
+#     x_slope = node.sdo[0x2000].raw
+#     y_slope = node.sdo[0x2200].raw
+
+#     print(x_slope,y_slope)
 # Cerrar conexión CAN
 network.disconnect()
