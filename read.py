@@ -22,7 +22,7 @@ subindex = 1
 quaternion = node.sdo[0x2301]
 
 for value in quaternion.values():
-    print("Error 0x%X was found in the log" % value.raw)
+    print(value.raw)
 
 
 # Cerrar conexión CAN
