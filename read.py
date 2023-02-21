@@ -67,14 +67,15 @@ subindex = 1
 
 #     print(x_grav,y_grav,z_grav)
 
-
+x_off = 0.27
+y_off = -0.41
 # X Y SLOPE
 while True:
     x_slope = node.sdo[0x2000].raw/(2**15)*180
 
     y_slope = node.sdo[0x2200].raw/(2**15)*180
 
-    print(round(x_slope,2), round(y_slope,2))
+    print(round(x_slope+x_off,2), round(y_slope+y_off,2))
 
 
 
