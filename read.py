@@ -48,16 +48,23 @@ subindex = 1
 # device type: 0x1000
 # quaternion: 0x2301
 
+## QUATERNIONS
+# while True:
+#     w = node.sdo[0x2301][0x01].raw
+#     x = node.sdo[0x2301][0x02].raw
+#     y = node.sdo[0x2301][0x03].raw
+#     z = node.sdo[0x2301][0x03].raw
+
+#     pitch,roll,yaw = quaternion_to_euler(w,x,y,z)
+
+#     print(pitch,roll,yaw)
+
+
+# x y slope
 while True:
-    w = node.sdo[0x2301][0x01].raw
-    x = node.sdo[0x2301][0x02].raw
-    y = node.sdo[0x2301][0x03].raw
-    z = node.sdo[0x2301][0x03].raw
+    x_slope = node.sdo[0x2000].raw
+    y_slope = node.sdo[0x2200].raw
 
-    pitch,roll,yaw = quaternion_to_euler(w,x,y,z)
-
-    print(pitch,roll,yaw)
-
-
+    print(x_slope,y_slope)
 # Cerrar conexión CAN
 network.disconnect()
