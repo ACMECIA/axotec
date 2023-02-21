@@ -19,10 +19,12 @@ subindex = 1
 
 # device type: 0x1000
 # quaternion: 0x2301
-quaternion = node.sdo[0x2301]
 
-for value in quaternion.values():
-    print(value.raw)
+while True:
+    quaternion = node.sdo[0x2301]
+
+    for value in quaternion.values():
+        print(value.raw)
 
 
 # Cerrar conexión CAN
