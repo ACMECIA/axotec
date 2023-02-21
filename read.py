@@ -71,9 +71,11 @@ subindex = 1
 # X Y SLOPE
 while True:
     x_slope = node.sdo[0x2000].raw
+    x_unit = node.sdo[0x2010].raw
     y_slope = node.sdo[0x2200].raw
+    y_unit = node.sdo[0x2210].raw
 
-    print(x_slope,y_slope)
+    print(x_slope,x_unit, y_slope, y_unit)
 
 
 
