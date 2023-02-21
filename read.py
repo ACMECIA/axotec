@@ -25,7 +25,7 @@ while True:
     y_grav = node.sdo[0x2300][0x02]
     z_grav = node.sdo[0x2300][0x03]
 
-    print(x_grav,y_grav,z_grav)
+    print(x_grav.raw,y_grav.raw,z_grav.raw)
 
 
 # Cerrar conexión CAN
