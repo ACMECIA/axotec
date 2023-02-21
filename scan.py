@@ -9,3 +9,5 @@ network.scanner.search()
 time.sleep(0.05)
 for node_id in network.scanner.nodes:
     print("Found node %d!" % node_id)
+
+network.disconnect()
