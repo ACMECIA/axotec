@@ -19,7 +19,7 @@ class GPS():
             speed_raw = received_data.split(b",")[7]       
             self.speed = float(speed_raw)*knots2ms 
             return self.speed
-        self.previous_speed = self.speed
-        return self.previous_speed
+        #self.previous_speed = self.speed
+        #return self.previous_speed
 
         
