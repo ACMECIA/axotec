@@ -1,7 +1,7 @@
 import serial
 
 class GPS():
-    def __init__(self,port="/dev/ttyUSB1"):
+    def __init__(self,port):
         self.ser = serial.Serial(port)
         self.previous_speed = 0
         self.speed = 0
