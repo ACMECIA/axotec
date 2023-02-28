@@ -12,13 +12,15 @@ class GPS():
         
  
     def get_vel(self):
-        
-        received_data= (self.ser.readline()) 
-        GPVTG_Data = received_data.find(b"$GPVTG,")
-        if (GPVTG_Data==0):
-            speed_raw = received_data.split(b",")[7]       
-            self.speed = float(speed_raw)*knots2ms 
-            return self.speed
+        try:
+            received_data= (self.ser.readline()) 
+            GPVTG_Data = received_data.find(b"$GPVTG,")
+            if (GPVTG_Data==0):
+                speed_raw = received_data.split(b",")[7]       
+                self.speed = float(speed_raw)*knots2ms 
+                return self.speed
+        except:
+            return None
         #self.previous_speed = self.speed
         #return self.previous_speed
 
