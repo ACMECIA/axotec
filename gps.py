@@ -40,9 +40,9 @@ class GPS():
 
             lat=lat//100+(lat/100-lat//100)*5/3
             long=long//100+(long/100-long//100)*5/3
-            if(received_data.split(b",")[3]=='S'):
+            if(str(received_data.split(b",")[3])=='S'):
                 lat*=-1
-            if(received_data.split(b",")[5]=='W'):
+            if(str(received_data.split(b",")[5])=='W'):
                 long*=-1
 
 
