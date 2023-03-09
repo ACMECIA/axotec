@@ -33,13 +33,11 @@ class GPS():
             lat = received_data.split(b",")[2]
             long = received_data.split(b",")[4]
             alt =  received_data.split(b",")[9]
-            speed_raw = received_data.split(b",")[7]
 
             self.lat = float(lat)
             self.long = float(long)
             self.alt = float(alt)
-            self.speed = float(speed_raw)
-
+         
     def print_test(self):
         received_data= (self.ser.readline()) 
         GPVTG_Data = received_data.find(b"$GPGGA,")
