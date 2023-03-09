@@ -42,13 +42,12 @@ class GPS():
 
     def print_test(self):
         received_data= (self.ser.readline()) 
-        GPVTG_Data = received_data.find(b"$GPVTG,")
+        GPVTG_Data = received_data.find(b"$GPGGA,")
         if (GPVTG_Data==0):
             lat = received_data.split(b",")[2]
             long = received_data.split(b",")[4]
             alt =  received_data.split(b",")[9]
-            speed_raw = received_data.split(b",")[7]
-            print(received_data.split(b","))
+            print(lat, long, alt)
       
 
         
