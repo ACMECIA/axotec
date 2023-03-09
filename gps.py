@@ -49,6 +49,10 @@ class GPS():
             self.lat = lat
             self.long = long
             self.alt = alt
+        else:
+            self.lat = None
+            self.long = None
+            self.alt = None
          
     def print_test(self):
         received_data= (self.ser.readline()) 
