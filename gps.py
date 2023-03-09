@@ -9,6 +9,9 @@ class GPS():
         self.ser = serial.Serial(port)
         self.previous_speed = 0
         self.speed = 0
+        self.lat = 0
+        self.long = 0
+        self.alt = 0
         
  
     def get_vel(self):
@@ -33,7 +36,7 @@ class GPS():
                 self.lat = float(lat)
                 self.long = float(long)
                 self.alt = float(alt)
-                
+
                 return self.lat, self.long, self.alt
         except:
             return 0,0,0
