@@ -48,7 +48,7 @@ class GPS():
             long = received_data.split(b",")[4]
             alt =  received_data.split(b",")[9]
             speed_raw = received_data.split(b",")[7]
-            print(lat, long, alt, speed_raw)
+            print(received_data.split(b","))
       
 
         
