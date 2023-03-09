@@ -40,9 +40,9 @@ class GPS():
 
             lat=lat//100+(lat/100-lat//100)*5/3
             long=long//100+(long/100-long//100)*5/3
-            if(str(received_data.split(b",")[3])=='S'):
+            if(received_data.split(b",")[3].decode('UTF-8')=='S'):
                 lat*=-1
-            if(str(received_data.split(b",")[5])=='W'):
+            if(received_data.split(b",")[5].decode('UTF-8')=='W'):
                 long*=-1
 
 
@@ -61,7 +61,7 @@ class GPS():
             lat = received_data.split(b",")[2]
             long = received_data.split(b",")[4]
             alt =  received_data.split(b",")[9]
-            print(str(received_data.split(b",")[3]),str(received_data.split(b",")[5]))
+            print(received_data.split(b",")[3].decode('UTF-8'),received_data.split(b",")[5].decode('UTF-8'))
       
 
         
