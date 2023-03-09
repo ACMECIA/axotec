@@ -17,7 +17,7 @@ class GPS():
             GPVTG_Data = received_data.find(b"$GPVTG,")
             if (GPVTG_Data==0):
                 speed_raw = received_data.split(b",")[7]       
-                self.speed = float(speed_raw)*knots2ms 
+                self.speed = float(speed_raw)
                 return self.speed
         except:
             return None
