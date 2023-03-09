@@ -34,6 +34,14 @@ class GPS():
             long = received_data.split(b",")[4]
             alt =  received_data.split(b",")[9]
 
+            lat=lat//100+(lat/100-lat//100)*5/3
+            long=long//100+(long/100-long//100)*5/3
+            if(received_data.split(b",")[3]=='S'):
+                lat*=-1
+            if(received_data.split(b",")[5]=='W'):
+                long*=-1
+
+
             self.lat = float(lat)
             self.long = float(long)
             self.alt = float(alt)
