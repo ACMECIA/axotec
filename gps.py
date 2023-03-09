@@ -33,6 +33,7 @@ class GPS():
                 self.lat = float(lat)
                 self.long = float(long)
                 self.alt = float(alt)
+                
                 return self.lat, self.long, self.alt
         except:
             return 0,0,0
