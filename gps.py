@@ -35,7 +35,7 @@ class GPS():
                 self.alt = float(alt)
                 return self.lat, self.long, self.alt
         except:
-            return None
+            return None, None, None
         #self.previous_speed = self.speed
         #return self.previous_speed
 
