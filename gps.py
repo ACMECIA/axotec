@@ -40,6 +40,18 @@ class GPS():
             self.alt = float(alt)
             self.speed = float(speed_raw)
 
+    def print_test(self):
+        received_data= (self.ser.readline()) 
+        GPVTG_Data = received_data.find(b"$GPVTG,")
+        if (GPVTG_Data==0):
+            lat = received_data.split(b",")[2]
+            long = received_data.split(b",")[4]
+            alt =  received_data.split(b",")[9]
+            speed_raw = received_data.split(b",")[7]
+            print(lat, long, alt, speed_raw)
+      
+
+        
     def get_pos(self):
         return self.lat, self.long, self.alt
 
