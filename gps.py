@@ -21,6 +21,7 @@ class GPS():
                 return self.speed
         except:
             return None
+        
         #self.previous_speed = self.speed
         #return self.previous_speed
 
