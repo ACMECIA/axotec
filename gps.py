@@ -21,7 +21,21 @@ class GPS():
                 return self.speed
         except:
             return None
-        
+    
+    def get_pos(self):
+        try:
+            received_data= (self.ser.readline()) 
+            GPVTG_Data = received_data.find(b"$GPVTG,")
+            if (GPVTG_Data==0):
+                lat = received_data.split(b",")[2]
+                long = received_data.split(b",")[4]
+                alt =  received_data.split(b",")[9]
+                self.lat = float(lat)
+                self.long = float(long)
+                self.alt = float(alt)
+                return self.lat, self.long, self.alt
+        except:
+            return None
         #self.previous_speed = self.speed
         #return self.previous_speed
 

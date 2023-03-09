@@ -4,6 +4,6 @@ gps = GPS()
 
 while True:
 
-    vel_gps = gps.get_vel()
-    if vel_gps is not None:
-        print(vel_gps)
+    lat, long, alt = gps.get_pos()
+    if lat is not None:
+        print(f"Latitud: {lat}; Longitud: {long}; Altitud: {alt}")
