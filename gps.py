@@ -34,6 +34,10 @@ class GPS():
             long = received_data.split(b",")[4]
             alt =  received_data.split(b",")[9]
 
+            lat = float(lat)
+            long = float(long)
+            alt = float(alt)
+
             lat=lat//100+(lat/100-lat//100)*5/3
             long=long//100+(long/100-long//100)*5/3
             if(received_data.split(b",")[3]=='S'):
@@ -42,9 +46,9 @@ class GPS():
                 long*=-1
 
 
-            self.lat = float(lat)
-            self.long = float(long)
-            self.alt = float(alt)
+            self.lat = lat
+            self.long = long
+            self.alt = alt
          
     def print_test(self):
         received_data= (self.ser.readline()) 
