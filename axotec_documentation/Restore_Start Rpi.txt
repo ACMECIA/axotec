@@ -1,0 +1,64 @@
+
+Please do following:
+
+1. Insert the restore stick to the RGX-840
+2. Press the recessed button next to the Ethernet socket and, with the button pressed, connect the power supply.
+3. The red LED switches on, then the red LED switches oﬀ and back on again. Now the button must be released.
+4. Start the restore process.
+5. Now let the system alone for 20 minutes.
+6. Remove the power supply.
+7. Remove the USB restore stick.
+8. Connect the RGX-840 serial interface (RS232) to the Ubuntu PC and start the terminal program. 
+	Parameters are: 115200, no parity, 8 data bit, 1 stop bit.
+	Putty: /dev/sstUSB0
+9. Connect power to the RGX-840
+10. Wait 10-20 seconds
+11. Now the boot messages will appear on the terminal screen.
+12. If a terminal is connected you can log in with the following access data
+	User: root
+	PW: axotec
+13. Now you have to install the drivers. Insert the restore stick to the RGX-840 and mount.
+	How mount:
+	fdisk -l ---> /dev/sdxx (USB Restore stick)
+	mkdir /media/usb-drive(name ramdon)
+	mount /dev/sdxx /media/usb-drive/
+	mount | grep sdc1 ---> ......(rw,relatime)
+	cd /media/usb-drive	
+14. After of mount change to the Debian/DRIVERS/install-fsetup
+15. Then execute the following command:
+	chmod +x fsetup.py
+16. Then execute:
+	./fsetup.py
+17. If all is finished, execute:
+	sync
+18. Now remove the power cable and reinsert it. You have now a factory setup.
+
+------------------------------------------------------------------------------------------------
+
+Install the desktop:
+
+1. After the restoration you must connect to a WiFi network:
+	sudo nano /etc/wpa_supplicant/wpa_supplicant.conf
+	Write the lines:
+	network={
+        	ssid="xxxxxxx"
+        	psk="xxxxxx"
+        	key_mgmt=WPA-PSK
+	}
+	Ctrl+o, then Ctrl+x
+2. Then execute the following command:
+	apt update
+3. Then:
+	apt-get upgrade or apt upgrade
+
+Note: Sometimes the HDMI is disabled by default. In the terminal console
+	In  nano /boot/config.txt change the line:
+		hdmi_ignore_hotplug=1 to:
+		#hdmi_ignore_hotplug=1
+
+	After saving and exiting nano execute:
+		sync
+
+---------------------------------------------------------------------------------------------------
+
+
