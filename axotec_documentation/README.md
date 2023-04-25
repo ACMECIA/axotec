@@ -25,7 +25,7 @@ sudo ./setup.py
 sudo nano /etc/wpa_supplicant/wpa_supplicant.conf
 
 Insertar 
-
+'''
 ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
 update_config=1
 country=PE
@@ -35,7 +35,7 @@ network={
 	psk="Electronic2016!"
 	key_mgmt=WPA-PSK
 }
-
+'''
 Despues
 
 sudo nano /etc/dhcpcd.conf 
