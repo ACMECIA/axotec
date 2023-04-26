@@ -348,3 +348,48 @@ ip link set down can0
 ip link set can0 up type can bitrate 125000
 # para ver el can 
 candump can1
+
+# Instalando nodered localmente
+
+```
+sudo apt-get update && sudo apt-get upgrade
+
+sudo apt-get install nodejs
+sudo apt-get install npm
+
+```
+
+```
+sudo npm install -g --unsafe-perm node-red
+
+```
+
+
+ejecutar `node-red`
+
+
+Ahora creamos un servicio 
+
+sudo nano /etc/systemd/system/node-red.service
+
+y pegamos lo siguiente 
+
+```
+[Unit]
+Description=Node-RED
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/env node-red-pi --max-old-space-size=256 -v
+Restart=on-failure
+KillSignal=SIGINT
+
+[Install]
+WantedBy=multi-user.target
+```
+
+ejecutamos `sudo systemctl daemon-reload` y `sudo systemctl enable node-red.service`
+
+y si funciona, cuando hagamos reboot, el nodered debería estar en el localhost:1880
+
+
