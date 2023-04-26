@@ -7,6 +7,6 @@ while True:
 
     # To watch positions
     gps.run()
-    vel = gps.get_vel()()
+    vel = gps.get_vel()
     if lat is not None:
         print(f"Velocidad: {round(vel,2)}")
