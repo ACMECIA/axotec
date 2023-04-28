@@ -313,21 +313,6 @@ se cambió en el archivo /sys/bus/iio/devices/iio\:device0/power/control
 de `auto` a `on` para que no sea manejado por el sistema de power management
 
 
-### GPS
-
-Activando el GPS
-
-Por defecto el GPS está activado, así que luego de instalar el ATCOM en python, corremos
-
-atcom --port /dev/ttyUSB2 AT+CGPS=1,1
-
-Para ponerlo en automático cuando encienda
-
-atcom --port /dev/ttyUSB2 AT+CGPSAUTO=1
-
-Para ver la data raw del GPS
-
-atcom --port /dev/ttyUSB2 AT+CGPSINFO
 
 ### Importante bluetooth 
 quitarle los permisos de escritura al archivo ```btuart```
@@ -349,47 +334,35 @@ ip link set can0 up type can bitrate 125000
 # para ver el can 
 candump can1
 
-# Instalando nodered localmente
+# Instalando nodered en el AXOTEC
+
+clonar el siguiente respositorio y seguir su README
 
 ```
-sudo apt update && sudo apt-get upgrade
-
-sudo apt-get install nodejs
-sudo apt-get install npm
-
+git clone https://github.com/dpflores/node-red-installation
 ```
 
+# USO DE GPS
+
+Instalamos el atcom para ejecutar comandos AT
 ```
-sudo npm install -g --unsafe-perm node-red
-
-```
-
-
-ejecutar `node-red`
-
-
-Ahora creamos un servicio 
-
-sudo nano /etc/systemd/system/node-red.service
-
-y pegamos lo siguiente 
-
-```
-[Unit]
-Description=Node-RED
-After=network.target
-
-[Service]
-ExecStart=/usr/bin/env node-red-pi --max-old-space-size=256 -v
-Restart=on-failure
-KillSignal=SIGINT
-
-[Install]
-WantedBy=multi-user.target
+sudo apt install python3-pip
+pip3 install atcom
 ```
 
-ejecutamos `sudo systemctl daemon-reload` y `sudo systemctl enable node-red.service`
 
-y si funciona, cuando hagamos reboot, el nodered debería estar en el localhost:1880
+### Activando el GPS
+
+Por defecto el GPS está activado, así que luego de instalar el ATCOM en python, corremos
+
+atcom --port /dev/ttyUSB2 AT+CGPS=1,1
+
+Para ponerlo en automático cuando encienda
+
+atcom --port /dev/ttyUSB2 AT+CGPSAUTO=1
+
+Para ver la data raw del GPS
+
+atcom --port /dev/ttyUSB2 AT+CGPSINFO
 
 
