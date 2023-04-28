@@ -366,3 +366,4 @@ Para ver la data raw del GPS
 atcom --port /dev/ttyUSB2 AT+CGPSINFO
 ```
 
+Habilitar el registro de velocidad 
