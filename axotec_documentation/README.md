@@ -354,15 +354,15 @@ pip3 install atcom
 ### Activando el GPS
 
 Por defecto el GPS está desactivado, así que luego de instalar el ATCOM en python, corremos
-
+```
 atcom --port /dev/ttyUSB2 AT+CGPS=1,1
-
+```
 Para ponerlo en automático cuando encienda
-
+```
 atcom --port /dev/ttyUSB2 AT+CGPSAUTO=1
-
+```
 Para ver la data raw del GPS
-
+```
 atcom --port /dev/ttyUSB2 AT+CGPSINFO
-
+```
 
