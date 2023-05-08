@@ -274,21 +274,55 @@ se cambió en el archivo /sys/bus/iio/devices/iio\:device0/power/control
 de `auto` a `on` para que no sea manejado por el sistema de power management
 
 
-### GPS
+# GPS
 
 Activando el GPS
 
-Por defecto el GPS está activado, así que luego de instalar el ATCOM en python, corremos
+Por defecto el GPS está desactivado, así que luego de instalar el ATCOM en python, corremos
 
+```
 atcom --port /dev/ttyUSB2 AT+CGPS=1,1
-
+```
 Para ponerlo en automático cuando encienda
 
-atcom --port /dev/ttyUSB2 AT+CGPSAUTO=1
+```
+atcom --port /dev/ttyUSB2 AT+CGPS=0,1    # se detiene el gps
+atcom --port /dev/ttyUSB2 AT+CGPSAUTO=1  # se activa el modo auto
+atcom --port /dev/ttyUSB2 AT+CGPS=1,1    # se activa de nuevo
+```
 
-Para ver la data raw del GPS
+Para habilitar correctamente la obtencion de velocidad y posicionamiento
 
+```
+atcom --port /dev/ttyUSB2 AT+CGPS=0,1          # se detiene el gps
+atcom --port /dev/ttyUSB2 AT+CGPSNMEA=198143   # se configura
+atcom --port /dev/ttyUSB2 AT+CGPS=1,1          # se activa de nuevo
+```
+
+Para verificar que hemos editado el nmea correctamente, corremos 
+
+```
+atcom --port /dev/ttyUSB2 AT+CGPSNMEA? 
+```
+y deberíamos de obtener  `+CGPSNMEA: 198143` como respuesta, en caso no sea, mirar la documentación de los comandos AT para GPS y ver si los bits que se requieren están activados.
+
+Para ver la posición del GPS
+
+```
 atcom --port /dev/ttyUSB2 AT+CGPSINFO
+```
+
+Podemos visualizar toda la data que se envía por el puerto serial (ttyUSB1) de la siguiente forma:
+
+```
+cat /dev/ttyUSB1
+```
+
+Si no se obtiene data, esperar unos minutos, sino hacer un cold start y esperar nuevamente unos minutos.
+
+```
+atcom --port /dev/ttyUSB2 AT+CGPSCOLD
+```
 
 # Bluetooth
 quitarle los permisos de escritura al archivo ```btuart```
@@ -310,42 +344,141 @@ ip link set can0 up type can bitrate 125000
 # para ver el can 
 candump can1
 
-# Instalando nodered en el AXOTEC
-
-clonar el siguiente respositorio y seguir su README
+# Instalando nodered localmente
 
 ```
-git clone https://github.com/dpflores/node-red-installation
+sudo apt-get update && sudo apt-get upgrade
+
+sudo apt-get install nodejs
+sudo apt-get install npm
+
 ```
 
-# USO DE GPS
-
-Instalamos el atcom para ejecutar comandos AT
 ```
-sudo apt install python3-pip
-pip3 install atcom
+sudo npm install -g --unsafe-perm node-red
+
 ```
 
 
-### Activando el GPS
+ejecutar `node-red`
 
-Por defecto el GPS está desactivado, así que luego de instalar el ATCOM en python, corremos
+
+Ahora creamos un servicio 
+
+sudo nano /etc/systemd/system/node-red.service
+
+y pegamos lo siguiente 
+
 ```
-atcom --port /dev/ttyUSB2 AT+CGPS=1,1
-```
-Para ponerlo en automático cuando encienda
-```
-atcom --port /dev/ttyUSB2 AT+CGPSAUTO=1
-```
-Para ver la data raw del GPS
-```
-atcom --port /dev/ttyUSB2 AT+CGPSINFO
+[Unit]
+Description=Node-RED
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/env node-red-pi --max-old-space-size=256 -v
+Restart=on-failure
+KillSignal=SIGINT
+
+[Install]
+WantedBy=multi-user.target
 ```
 
 ejecutamos `sudo systemctl daemon-reload` y `sudo systemctl enable node-red.service`
 
 y si funciona, cuando hagamos reboot, el nodered debería estar en el localhost:1880
 
+# Configurar el AXOTEC como wireless Access Point
+
+
+
+
+Primero habilitar el servidor dhcp
+https://thepi.io/how-to-use-your-raspberry-pi-as-a-wireless-access-point/
+seguir ese link pero solo para el dhcp
+
+Primero instalamos el dnsmasq, que será el servidor DHCP y DNS
+
+```
+sudo apt-get install dnsmasq
+
+```
+
+Como lo vamos a modificar, entonces detenemos el servicio
+
+```
+sudo systemctl stop hostapd
+
+```
+
+Primero configuramos un IP estatico para la interfaz wlan0, para modificar el archivo, ejecutamos 
+
+```
+sudo nano /etc/dhcpcd.conf
+```
+
+Al final del archivo agregamos lo siguiente
+
+```
+interface wlan0
+static ip_address=192.168.0.10/24
+```
+
+De quere hacer lo mismo con el ethernet es lo mismo, solo utilizar la interfaz `eth0`, pero esto ya se hace normalmente con la IP `192.168.82.200`
+
+Ahora configuramos el archivo de configración del servidor DCHP, para lo cuál primero se recomienda guardar la configuración predeterminada
+
+```
+sudo mv /etc/dnsmasq.conf /etc/dnsmasq.conf.orig
+```
+
+Y luego editamos un nuveo archivo
+
+```
+sudo nano /etc/dnsmasq.conf
+
+```
+donde agregaremos las siguientes líneas 
+
+```
+interface=wlan0
+  dhcp-range=192.168.0.11,192.168.0.30,255.255.255.0,24h
+```
+
+Esto significa que el servidor proveerá direcciones IP entre `192.168.0.11` hasta `192.168.0.30` en la interfaz `wlan0`.
+
+
+Luego habilitamos la conexion por wifi al axotec 
+https://raspberrypi.stackexchange.com/questions/88214/setting-up-a-raspberry-pi-as-an-access-point-the-easy-way/88234#88234
+
+revisar el link si se desea otras configuraciones
+
+
+Primero realizamos la configuración básica para crear el access point con lo siguiente
+
+```
+cat > /etc/wpa_supplicant/wpa_supplicant-wlan0.conf <<EOF
+country=PE
+ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
+update_config=1
+
+network={
+    ssid="Axotec"
+    mode=2
+    frequency=2437
+    #key_mgmt=NONE   # uncomment this for an open hotspot
+    # delete next 3 lines if key_mgmt=NONE
+    key_mgmt=WPA-PSK
+    proto=RSN WPA
+    psk="password"
+}
+EOF
+
+chmod 600 /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
+systemctl disable wpa_supplicant.service
+systemctl enable wpa_supplicant@wlan0.service
+rfkill unblock wlan
+```
+En estas líneas principalmente importa la definición del `SSID`, que es el nombre de la red y el `PSK`, que es la contraseña de esta 
 
 
 ## Access ponit simple por wifi
