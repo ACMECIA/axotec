@@ -155,46 +155,7 @@ y cambiar la zona horaria a la de Lima
 https://docs.docker.com/engine/install/debian/
 
 
-// Primer método (preferible)
-sudo apt update
-sudo apt install docker.io
-sudo systemctl start docker
-sudo systemctl enable docker
 
-// Otro metodo
-
-sudo apt-get update --allow-releaseinfo-change
-
-curl -fsSL https://get.docker.com -o get-docker.sh
-
-sudo sh get-docker.sh
-
-sudo usermod -aG docker pi
-
-sudo reboot
-
-docker version 
-
-<!-- docker pull debian:buster-slim -->
-
-<!-- docker run --name debian_container -it debian:buster-slim -->
-clonar el dockerfile y en la carpeta correr el buil o crear la imagen con
-
-```
-FROM balenalib/raspberry-pi-debian:stretch-build
-RUN useradd --create-home --shell /bin/bash axotec_user && echo "axotec_user:axotec" | chpasswd && adduser axotec_user sudo
-WORKDIR /home/axotec_user
-
-USER axotec_user
-
-RUN apt-get update
-RUN apt-get install strongswan xl2tpd net-tools
-
-
-
-CMD ["bash"]
-
-```
 
 docker build -t axotec_image .
 
@@ -313,23 +274,57 @@ se cambió en el archivo /sys/bus/iio/devices/iio\:device0/power/control
 de `auto` a `on` para que no sea manejado por el sistema de power management
 
 
-### GPS
+# GPS
 
 Activando el GPS
 
-Por defecto el GPS está activado, así que luego de instalar el ATCOM en python, corremos
+Por defecto el GPS está desactivado, así que luego de instalar el ATCOM en python, corremos
 
+```
 atcom --port /dev/ttyUSB2 AT+CGPS=1,1
-
+```
 Para ponerlo en automático cuando encienda
 
-atcom --port /dev/ttyUSB2 AT+CGPSAUTO=1
+```
+atcom --port /dev/ttyUSB2 AT+CGPS=0,1    # se detiene el gps
+atcom --port /dev/ttyUSB2 AT+CGPSAUTO=1  # se activa el modo auto
+atcom --port /dev/ttyUSB2 AT+CGPS=1,1    # se activa de nuevo
+```
 
-Para ver la data raw del GPS
+Para habilitar correctamente la obtencion de velocidad y posicionamiento
 
+```
+atcom --port /dev/ttyUSB2 AT+CGPS=0,1          # se detiene el gps
+atcom --port /dev/ttyUSB2 AT+CGPSNMEA=198143   # se configura
+atcom --port /dev/ttyUSB2 AT+CGPS=1,1          # se activa de nuevo
+```
+
+Para verificar que hemos editado el nmea correctamente, corremos 
+
+```
+atcom --port /dev/ttyUSB2 AT+CGPSNMEA? 
+```
+y deberíamos de obtener  `+CGPSNMEA: 198143` como respuesta, en caso no sea, mirar la documentación de los comandos AT para GPS y ver si los bits que se requieren están activados.
+
+Para ver la posición del GPS
+
+```
 atcom --port /dev/ttyUSB2 AT+CGPSINFO
+```
 
-### Importante bluetooth 
+Podemos visualizar toda la data que se envía por el puerto serial (ttyUSB1) de la siguiente forma:
+
+```
+cat /dev/ttyUSB1
+```
+
+Si no se obtiene data, esperar unos minutos, sino hacer un cold start y esperar nuevamente unos minutos.
+
+```
+atcom --port /dev/ttyUSB2 AT+CGPSCOLD
+```
+
+# Bluetooth
 quitarle los permisos de escritura al archivo ```btuart```
 
 
@@ -392,4 +387,115 @@ ejecutamos `sudo systemctl daemon-reload` y `sudo systemctl enable node-red.serv
 
 y si funciona, cuando hagamos reboot, el nodered debería estar en el localhost:1880
 
+# Configurar el AXOTEC como wireless Access Point
 
+
+
+
+Primero habilitar el servidor dhcp
+https://thepi.io/how-to-use-your-raspberry-pi-as-a-wireless-access-point/
+seguir ese link pero solo para el dhcp
+
+Primero instalamos el dnsmasq, que será el servidor DHCP y DNS
+
+```
+sudo apt-get install dnsmasq
+
+```
+
+Como lo vamos a modificar, entonces detenemos el servicio
+
+```
+sudo systemctl stop hostapd
+
+```
+
+Primero configuramos un IP estatico para la interfaz wlan0, para modificar el archivo, ejecutamos 
+
+```
+sudo nano /etc/dhcpcd.conf
+```
+
+Al final del archivo agregamos lo siguiente
+
+```
+interface wlan0
+static ip_address=192.168.0.10/24
+```
+
+De quere hacer lo mismo con el ethernet es lo mismo, solo utilizar la interfaz `eth0`, pero esto ya se hace normalmente con la IP `192.168.82.200`
+
+Ahora configuramos el archivo de configración del servidor DCHP, para lo cuál primero se recomienda guardar la configuración predeterminada
+
+```
+sudo mv /etc/dnsmasq.conf /etc/dnsmasq.conf.orig
+```
+
+Y luego editamos un nuveo archivo
+
+```
+sudo nano /etc/dnsmasq.conf
+
+```
+donde agregaremos las siguientes líneas 
+
+```
+interface=wlan0
+  dhcp-range=192.168.0.11,192.168.0.30,255.255.255.0,24h
+```
+
+Esto significa que el servidor proveerá direcciones IP entre `192.168.0.11` hasta `192.168.0.30` en la interfaz `wlan0`.
+
+
+Luego habilitamos la conexion por wifi al axotec 
+https://raspberrypi.stackexchange.com/questions/88214/setting-up-a-raspberry-pi-as-an-access-point-the-easy-way/88234#88234
+
+revisar el link si se desea otras configuraciones
+
+
+Primero realizamos la configuración básica para crear el access point con lo siguiente
+
+```
+cat > /etc/wpa_supplicant/wpa_supplicant-wlan0.conf <<EOF
+country=PE
+ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
+update_config=1
+
+network={
+    ssid="Axotec"
+    mode=2
+    frequency=2437
+    #key_mgmt=NONE   # uncomment this for an open hotspot
+    # delete next 3 lines if key_mgmt=NONE
+    key_mgmt=WPA-PSK
+    proto=RSN WPA
+    psk="password"
+}
+EOF
+
+chmod 600 /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
+systemctl disable wpa_supplicant.service
+systemctl enable wpa_supplicant@wlan0.service
+rfkill unblock wlan
+```
+En estas líneas principalmente importa la definición del `SSID`, que es el nombre de la red y el `PSK`, que es la contraseña de esta 
+
+
+## Access ponit simple por wifi
+Esta configuración permite el conectarse a la red del axotec por wifi
+```
+cat > /etc/systemd/network/08-wlan0.network <<EOF
+[Match]
+Name=wlan0
+[Network]
+Address=192.168.0.10/24
+MulticastDNS=yes
+DHCPServer=yes
+EOF
+```
+
+Tener en cuenta la `IP` del Axotec, que hemos configurado previamente de forma estática
+
+Con esto ya estaría el access point con el Axotec, el procedimiento es similar si se desea que se utilice la interfaz `eth0`, solo que sinla configuración access point.
+
+`configurar IP estática -> configurar servidor DHCP para eth0`
