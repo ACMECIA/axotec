@@ -88,7 +88,7 @@ atcom --port /dev/ttyUSB2 AT+CRESET
 
 NUEVA FORMA DE HACERLO 
 
-Sigue la guia de axotec de ifm pero sin username y password, todo se mantiene igual, lo unico que cambia es el APN: claro.pe o movistar.pe en chat-script
+Sigue la guia de axotec de ifm pero sin username y password, todo se mantiene igual, lo unico que cambia es el APN: claro.pe o movistar.pe en `/etc/ppp/chat-script`
 
 Adicionalmente:
 nano /etc/ppp/peers/provider
