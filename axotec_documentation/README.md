@@ -328,21 +328,33 @@ atcom --port /dev/ttyUSB2 AT+CGPSCOLD
 quitarle los permisos de escritura al archivo ```btuart```
 
 
-### CAN Bus
+## CAN Bus
 
+```
 ip link set down can1
 ip link set can1 up type can bitrate 250000 listen-only on
 ip link set can1 up type can bitrate 250000 listen-only off
+```
 
-
-##JD2120
+###JD2120
+```
 ip link set down can1
 ip link set can1 up type can bitrate 125000
 
 ip link set down can0
 ip link set can0 up type can bitrate 125000
-# para ver el can 
+```
+### para ver el can 
+```
 candump can1
+```
+
+### Para ver los archivos de configuración
+```
+/etc/network/interfaces.d/can0
+/etc/network/interfaces.d/can1
+```
+
 
 # Instalando nodered localmente
 
