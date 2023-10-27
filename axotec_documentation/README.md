@@ -138,7 +138,11 @@ persist
 noauth
 
 ```
-
+También revisar bien `/etc/ppp/options` que tengan estas lineas
+```
+/dev/ttyUSB3
+9600
+```
 # Cambio de zona horaria
 
 ejecutar 
